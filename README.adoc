@@ -102,7 +102,7 @@ endif::[]
 //------------------------------------ 
 == {assignment}
 
-{lastName}:: PASERO
+{lastName}:: PASER0
 
 {firstName}:: Auguste
 
