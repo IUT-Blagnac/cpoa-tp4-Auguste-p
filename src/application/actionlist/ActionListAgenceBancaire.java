@@ -37,7 +37,7 @@ public class ActionListAgenceBancaire implements ActionList {
 		for (int i=0; i<this.size(); i++) {
 			System.out.println("	" + liste_des_actions.get(i).actionCode() + " - "+ liste_des_actions.get(i).actionMessage());
 		}
-		System.out.println("	0 - Pour quitter ce menu\r\n" + "Votre choix ?");
+		System.out.println("\n	0 - Pour quitter ce menu\r\n" + "Votre choix ?");
 	}
 
 	@Override
