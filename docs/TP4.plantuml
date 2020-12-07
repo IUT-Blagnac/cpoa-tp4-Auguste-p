@@ -1,0 +1,108 @@
+@startuml
+class Main [[java:Main]] {
+	+{static}void main(String[] args)
+}
+package "action" {
+interface Action [[java:action.Action]] {
+	String actionMessage()
+	String actionCode()
+	void execute(AgenceBancaire ag)
+}
+interface ActionList [[java:action.ActionList]] {
+	String listTitle()
+	int size()
+	boolean addAction(Action ac)
+}
+interface Action [[java:action.Action]] {
+}
+Action <|.. ActionList
+}
+package "banque" {
+class AgenceBancaire [[java:banque.AgenceBancaire]] {
+	-String nom
+	-String loc
+	-ArrayList<Compte> alCptes
+	+AgenceBancaire(String pNomAgence, String pLocAgence)
+	+String getNomAgence()
+	+String getLocAgence()
+	+int getNbComptes()
+	+Compte getCompte(String pNumCompte)
+	+Compte[] getComptesDe(String pNomProprietaire)
+	+void afficher()
+	+String toString()
+	+void addCompte(Compte pCompteAAjouter)
+	+void removeCompte(String pNumCompte)
+	-Compte trouveCompte(String pNC)
+}
+class Compte [[java:banque.Compte]] {
+	-String proprietaire
+	-String numCompte
+	-double debits
+	-double credits
+	-int nbDebits
+	-int nbCredits
+	+Compte()
+	+Compte(String pNumCompte, String pNomProp)
+	+double soldeCompte()
+	+String getProprietaire()
+	+String getNumCompte()
+	+void afficher()
+	+String toString()
+	+void retirer(double pSomme)
+	+void deposer(double pSomme)
+	+void setProprietaire(String pNomProp)
+}
+AgenceBancaire o-- Compte
+}
+package "application.actions" {
+    class ActionListeDesComptes [[java:application.action.ActionListeDesComptes]] {
+	~String message
+	~String code
+	+ActionListeDesComptes(String message, String code)
+	+String actionMessage()
+	+String actionCode()
+	+void execute(AgenceBancaire ag)
+}
+interface Action [[java:action.Action]] {
+}
+Action <|-- ActionListeDesComptes
+class ActionVoirCompteNumero [[java:application.action.ActionVoirCompteNumero]] {
+	~String message
+	~String code
+	+ActionVoirCompteNumero(String message, String code)
+	+String actionMessage()
+	+String actionCode()
+	+void execute(AgenceBancaire ag)
+}
+interface Action [[java:action.Action]] {
+}
+Action <|-- ActionVoirCompteNumero
+class Quitter [[java:application.action.Quitter]] {
+	~String message
+	~String code
+	+Quitter(String message, String code)
+	+String actionMessage()
+	+String actionCode()
+	+void execute(AgenceBancaire ag)
+}
+interface Action [[java:action.Action]] {
+}
+Action <|-- Quitter
+}
+package "application" {
+    class ActionListAgenceBancaire [[java:application.actionlist.ActionListAgenceBancaire]] {
+	~String message
+	~String code
+	~String title
+	~ArrayList<Action> liste_des_actions
+	+ActionListAgenceBancaire(String message, String code, String title, ArrayList<Action> liste_des_actions)
+	+String actionMessage()
+	+String actionCode()
+	+void execute(AgenceBancaire ag)
+	+String listTitle()
+	+int size()
+	+boolean addAction(Action ac)
+}
+ActionListAgenceBancaire ..|> ActionList
+}
+@enduml
