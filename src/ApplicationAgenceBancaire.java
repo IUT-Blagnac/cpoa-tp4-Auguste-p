@@ -16,9 +16,9 @@ public class ApplicationAgenceBancaire {
 	public static void afficherMenu(AgenceBancaire ag) {
 		System.out.println("Menu de " + ag.getNomAgence() + " (" + ag.getLocAgence() + ")");
 		System.out.println("l - Liste des comptes de l'agence");
-		System.out.println("v - Voir un compte (par son num�ro)");
-		System.out.println("p - voir les comptes d'un Propri�taire (par son nom)");
-		System.out.println("d - D�poser de l'argent sur un compte");
+		System.out.println("v - Voir un compte (par son numéro)");
+		System.out.println("p - Voir les comptes d'un Propriétaire (par son nom)");
+		System.out.println("d - Déposer de l'argent sur un compte");
 		System.out.println("r - Retirer de l'argent sur un compte");
 		System.out.println("q - Quitter");
 		System.out.print("Choix -> ");
@@ -27,6 +27,7 @@ public class ApplicationAgenceBancaire {
 	/**
 	 * Temporisation : Affiche un message et attend la frappe de n'importe quel caract�re.
 	 */
+	@SuppressWarnings("resource")
 	public static void tempo () {
 		Scanner lect ;
 		
@@ -36,6 +37,7 @@ public class ApplicationAgenceBancaire {
 		lect.next(); // Inutile � stocker mais ... 
 	}
 
+	@SuppressWarnings("resource")
 	public static void main(String argv[]) {
 		
 		String choix;
@@ -80,7 +82,7 @@ public class ApplicationAgenceBancaire {
 					ApplicationAgenceBancaire.tempo();
 					break;
 				case "p" :
-					System.out.print("Propri�taire -> ");
+					System.out.print("Propriétaire -> ");
 					nom = lect.next();
 					ApplicationAgenceBancaire.comptesDUnPropretaire (monAg, nom);
 					ApplicationAgenceBancaire.tempo();
@@ -88,7 +90,7 @@ public class ApplicationAgenceBancaire {
 				case "d" :
 					System.out.print("Num compte -> ");
 					numero = lect.next();
-					System.out.print("Montant � d�poser -> ");
+					System.out.print("Montant à déposer -> ");
 					montant = lect.nextDouble();
 					ApplicationAgenceBancaire.deposerSurUnCompte(monAg, numero, montant);
 					ApplicationAgenceBancaire.tempo();
@@ -96,7 +98,7 @@ public class ApplicationAgenceBancaire {
 				case "r" :
 					System.out.print("Num compte -> ");
 					numero = lect.next();
-					System.out.print("Montant � retirer -> ");
+					System.out.print("Montant à retirer -> ");
 					montant = lect.nextDouble();
 					ApplicationAgenceBancaire.retirerSurUnCompte(monAg, numero, montant);
 					ApplicationAgenceBancaire.tempo();

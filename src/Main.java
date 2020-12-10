@@ -8,7 +8,6 @@ import application.action.ActionListeDesComptes;
 import application.action.ActionVoirCompteNumero;
 import application.actionlist.ActionListAgenceBancaire;
 import banque.AgenceBancaire;
-import banque.Compte;
 
 public class Main {
 	public static void main(String[] args) {
@@ -21,19 +20,11 @@ public class Main {
 		liste_des_actions.add(liste);
 		liste_des_actions.add(compteNum);
 		
-		ActionListAgenceBancaire acliste = new ActionListAgenceBancaire("Afficher la liste des comptes", "LC", null, liste_des_actions);
-		
-		acliste.addAction(liste);
-		acliste.addAction(compteNum);
-					
-		String choix = null;
-
+		ActionListAgenceBancaire acliste = new ActionListAgenceBancaire("Création liste agence", "CLA", "Liste agence", liste_des_actions);
+							
 		@SuppressWarnings("resource")
 		Scanner lect = new Scanner ( System.in );
-		lect.useLocale(Locale.US);
-		AgenceBancaire monAg ;
-		
-		monAg = AccesAgenceBancaire.getAgenceBancaire();
+		lect.useLocale(Locale.FRANCE);
 		
 		boolean continuer = true;
 		while (continuer) {
@@ -43,12 +34,12 @@ public class Main {
 					"--\r\n" + 
 					"  Choisir :\r\n"); 
 			try {
-				acliste.execute(monAg);
+				acliste.execute(ag);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			choix = lect.next();
+			String choix = lect.next();			
 			switch (choix) {
 				case "0" :
 					System.out.println("ByeBye");

@@ -1,15 +1,16 @@
 package application.action;
 
+import java.util.Scanner;
+
 import action.Action;
-import application.AccesAgenceBancaire;
 import banque.AgenceBancaire;
 
-public class Quitter implements Action {
+public class ActionSupprimerCompte implements Action {
 	
 	String message;
 	String code;
 			
-	public Quitter(String message, String code) {
+	public ActionSupprimerCompte(String message, String code) {
 		super();
 		this.message = message;
 		this.code = code;
@@ -27,8 +28,14 @@ public class Quitter implements Action {
 
 	@Override
 	public void execute(AgenceBancaire ag) throws Exception {
-		AgenceBancaire monAg = AccesAgenceBancaire.getAgenceBancaire();
-		monAg.afficher();
-	}
 
+		System.out.print("Num compte -> ");
+		
+		@SuppressWarnings("resource")
+		Scanner lect = new Scanner (System.in);
+		String t = lect.next();
+		
+		ag.removeCompte(t);
+		System.out.print("Le compte "+t+" a été supprimé.\n");
+	}
 }

@@ -3,16 +3,15 @@ package application.action;
 import java.util.Scanner;
 
 import action.Action;
-import application.AccesAgenceBancaire;
 import banque.AgenceBancaire;
 import banque.Compte;
 
-public class ActionVoirCompteNumero implements Action {
+public class ActionVoirCompteNom implements Action {
 
 	String message;
 	String code;
 			
-	public ActionVoirCompteNumero(String message, String code) {
+	public ActionVoirCompteNom(String message, String code) {
 		super();
 		this.message = message;
 		this.code = code;
@@ -31,17 +30,20 @@ public class ActionVoirCompteNumero implements Action {
 	@SuppressWarnings("resource")
 	@Override
 	public void execute(AgenceBancaire ag) throws Exception {
+		System.out.print("Propriétaire -> ");
+		
 		Scanner lect;
 		lect = new Scanner (System.in);
+		String nom = lect.next();
+		Compte []  t; 
 		
-		System.out.print("Num compte -> ");
-		String numero = lect.next();
-		Compte c = ag.getCompte(numero);
-		if (c==null) {
-			System.out.println("Compte inexistant ...");
+		t = ag.getComptesDe(nom);
+		if (t.length == 0) {
+			System.out.println("Pas de compte à ce nom ...");
 		} else {
-			c.afficher();
+			System.out.println("  " + t.length + " comptes pour " + nom);
+			for (int i=0; i<t.length; i++)
+				t[i].afficher();
 		}
 	}
-
 }

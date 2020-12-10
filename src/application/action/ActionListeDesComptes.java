@@ -27,8 +27,7 @@ public class ActionListeDesComptes implements Action {
 
 	@Override
 	public void execute(AgenceBancaire ag) throws Exception {
-		AgenceBancaire monAg = AccesAgenceBancaire.getAgenceBancaire();
-		monAg.afficher();
+		ag.afficher();
 	}
 
 }

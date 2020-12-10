@@ -8,19 +8,19 @@ import action.Action;
 import action.ActionList;
 import banque.AgenceBancaire;
 
-public class ActionListAgenceBancaire implements ActionList {
+public class ActionListMenuGest implements ActionList {
 	
 	String message;
 	String code;
 	String title;
-	ArrayList<Action> liste_des_actions;
+	ArrayList<Action> liste_des_gestions;
 
-	public ActionListAgenceBancaire(String message, String code, String title, ArrayList<Action> liste_des_actions) {
+	public ActionListMenuGest(String message, String code, String title, ArrayList<Action> liste_des_gestions) {
 		super();
 		this.message = message;
 		this.code = code;
 		this.title = title;
-		this.liste_des_actions = liste_des_actions;
+		this.liste_des_gestions = liste_des_gestions;
 	}
 
 	@Override
@@ -39,11 +39,10 @@ public class ActionListAgenceBancaire implements ActionList {
 			this.printMenu();
 			int choice = this.readResponse();
 			if(choice==-1) {
-				System.out.println("ByeBye");
+				System.out.println("Fin du menu gestion des comptes");
 				break;
 			}
-			this.liste_des_actions.get(choice).execute(ag);
-			
+			this.liste_des_gestions.get(choice).execute(ag);			
 		}		
 	}
 	
@@ -62,7 +61,7 @@ public class ActionListAgenceBancaire implements ActionList {
 				"--\r\n" + 
 				"  Choisir :"); 
 		for (int i=0; i<this.size(); i++) {
-			System.out.println("	" + liste_des_actions.get(i).actionCode() + " - "+ liste_des_actions.get(i).actionMessage());
+			System.out.println("	" + liste_des_gestions.get(i).actionCode() + " - "+ liste_des_gestions.get(i).actionMessage());
 		}
 		System.out.println("\n	0 - Pour quitter ce menu");
 		System.out.println("Votre choix ?");
@@ -75,7 +74,7 @@ public class ActionListAgenceBancaire implements ActionList {
 
 	@Override
 	public int size() {
-		return liste_des_actions.size();
+		return liste_des_gestions.size();
 	}
 
 	@Override
@@ -83,11 +82,11 @@ public class ActionListAgenceBancaire implements ActionList {
 		int length = this.size();
 		
 		for (int i=0; i<length; i++) {
-			if (liste_des_actions.get(i).equals(ac)) {
+			if (liste_des_gestions.get(i).equals(ac)) {
 				return false;
 			}
 		}
-		liste_des_actions.add(ac);
+		liste_des_gestions.add(ac);
 		return true;
 	}
 

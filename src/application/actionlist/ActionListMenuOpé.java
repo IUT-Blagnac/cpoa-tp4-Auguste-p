@@ -8,19 +8,19 @@ import action.Action;
 import action.ActionList;
 import banque.AgenceBancaire;
 
-public class ActionListAgenceBancaire implements ActionList {
+public class ActionListMenuOpé implements ActionList {
 	
 	String message;
 	String code;
 	String title;
-	ArrayList<Action> liste_des_actions;
+	ArrayList<Action> liste_des_opérations;
 
-	public ActionListAgenceBancaire(String message, String code, String title, ArrayList<Action> liste_des_actions) {
+	public ActionListMenuOpé(String message, String code, String title, ArrayList<Action> liste_des_opérations) {
 		super();
 		this.message = message;
 		this.code = code;
 		this.title = title;
-		this.liste_des_actions = liste_des_actions;
+		this.liste_des_opérations = liste_des_opérations;
 	}
 
 	@Override
@@ -39,15 +39,19 @@ public class ActionListAgenceBancaire implements ActionList {
 			this.printMenu();
 			int choice = this.readResponse();
 			if(choice==-1) {
-				System.out.println("ByeBye");
+				System.out.println("Fin du menu opérations sur comptes");
 				break;
+			}				
+			try {
+				this.liste_des_opérations.get(choice).execute(ag);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			this.liste_des_actions.get(choice).execute(ag);
 			
 		}		
 	}
 	
-	@SuppressWarnings({ "resource", "unused" })
+	@SuppressWarnings({ "resource" })
 	private int readResponse() {
 		Scanner lect = new Scanner ( System.in );
 		lect.useLocale(Locale.FRANCE);
@@ -62,7 +66,7 @@ public class ActionListAgenceBancaire implements ActionList {
 				"--\r\n" + 
 				"  Choisir :"); 
 		for (int i=0; i<this.size(); i++) {
-			System.out.println("	" + liste_des_actions.get(i).actionCode() + " - "+ liste_des_actions.get(i).actionMessage());
+			System.out.println("	" + liste_des_opérations.get(i).actionCode() + " - "+ liste_des_opérations.get(i).actionMessage());
 		}
 		System.out.println("\n	0 - Pour quitter ce menu");
 		System.out.println("Votre choix ?");
@@ -75,7 +79,7 @@ public class ActionListAgenceBancaire implements ActionList {
 
 	@Override
 	public int size() {
-		return liste_des_actions.size();
+		return liste_des_opérations.size();
 	}
 
 	@Override
@@ -83,11 +87,11 @@ public class ActionListAgenceBancaire implements ActionList {
 		int length = this.size();
 		
 		for (int i=0; i<length; i++) {
-			if (liste_des_actions.get(i).equals(ac)) {
+			if (liste_des_opérations.get(i).equals(ac)) {
 				return false;
 			}
 		}
-		liste_des_actions.add(ac);
+		liste_des_opérations.add(ac);
 		return true;
 	}
 
