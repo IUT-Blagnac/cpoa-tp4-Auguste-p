@@ -1,6 +1,6 @@
 package banque;
 
-import banque.exception.CompteException;
+import banque.exception.CompteExceptionGenerique;
 
 
 /************************************************************
@@ -15,7 +15,7 @@ import banque.exception.CompteException;
 
 // Classe des comptes standards
 
-public class Compte extends Object
+public class CompteGenerique extends Object
 // Si cet h�ritage n'est pas pr�cis�, il est implicite
 {
 	/*********************************
@@ -49,7 +49,7 @@ public class Compte extends Object
 	 * 
 	 * @see Compte#Compte(String, String)
 	 */
-	public Compte() {
+	public CompteGenerique() {
 		this("Pas de num�ro", "Pas de propri�taire");
 	}
 
@@ -65,7 +65,7 @@ public class Compte extends Object
 	 * @param pNomProp
 	 *            Le nom du propri�taire.
 	 */
-	public Compte(String pNumCompte, String pNomProp) {
+	public CompteGenerique(String pNumCompte, String pNomProp) {
 		this.numCompte = pNumCompte;
 		this.proprietaire = pNomProp;
 		this.debits = 0;
@@ -141,13 +141,13 @@ public class Compte extends Object
 	 * 
 	 * @param pSomme
 	 *            Le montant retir� sur le Compte.
-	 * @throws CompteException
+	 * @throws CompteExceptionGenerique
 	 *             Lorsque pSomme < 0
 	 * @see Compte#deposer(double)
 	 */
-	public void retirer(double pSomme) throws CompteException {
+	public void retirer(double pSomme) throws CompteExceptionGenerique {
 		if (pSomme < 0) {
-			throw new CompteException(
+			throw new CompteExceptionGenerique(
 					"Erreur de somme n�gative lors d'un retrait sur " + this.numCompte);
 		}
 		this.debits = this.debits + pSomme;
@@ -162,13 +162,13 @@ public class Compte extends Object
 	 * 
 	 * @param pSomme
 	 *            Le montant d�pos� sur le Compte.
-	 * @throws CompteException
+	 * @throws CompteExceptionGenerique
 	 *             Lorsque pSomme < 0
 	 * @see Compte#retirer(double)
 	 */
-	public void deposer(double pSomme) throws CompteException {
+	public void deposer(double pSomme) throws CompteExceptionGenerique {
 		if (pSomme < 0) {
-			throw new CompteException(
+			throw new CompteExceptionGenerique(
 					"Erreur de somme n�gative lors d'un d�pot sur " + this.numCompte);
 		}
 		this.credits = this.credits + pSomme;

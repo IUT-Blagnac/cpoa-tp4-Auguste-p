@@ -2,10 +2,9 @@ package banque;
 
 import java.util.ArrayList;
 
-import banque.exception.ABCompteDejaExistantException;
-import banque.exception.ABCompteInexistantException;
+import banque.exception.ABCompteDejaExistantExceptionGenerique;
 import banque.exception.ABCompteInexistantExceptionGenerique;
-import banque.exception.ABCompteNullException;
+import banque.exception.ABCompteNullExceptionGenerique;
 
 
 // V ARRAYLLIST OK
@@ -20,10 +19,10 @@ import banque.exception.ABCompteNullException;
  * @version 7.02
  *****************************/
 
-public class AgenceBancaire {
+public class AgenceBancaireGenerique {
 	// Attributs
 	private String nom, loc;
-	private ArrayList<Compte> alCptes;
+	private ArrayList<CompteGenerique> alCptes;
 
 	/**
 	 * Constructeur param�tr�.<BR>
@@ -36,10 +35,10 @@ public class AgenceBancaire {
 	 *            La ville de localisation de l'AgenceBancaire.
 	 */
 
-	public AgenceBancaire(String pNomAgence, String pLocAgence) {
+	public AgenceBancaireGenerique(String pNomAgence, String pLocAgence) {
 		this.nom = pNomAgence;
 		this.loc = pLocAgence;
-		this.alCptes = new ArrayList<Compte>();
+		this.alCptes = new ArrayList<CompteGenerique>();
 	}
 
 	/**
@@ -84,12 +83,12 @@ public class AgenceBancaire {
 	 * 
 	 * @param pNumCompte
 	 *            Le num�ro du Compte recherch�.
-	 * @see AgenceBancaire#addCompte(Compte)
+	 * @see AgenceBancaire#addCompte(CompteGenerique)
 	 * @return Le Compte de num�ro pNumCompte, null si le compte n'est pas
 	 *         trouv�.
 	 */
 
-	public Compte getCompte(String pNumCompte) {
+	public CompteGenerique getCompte(String pNumCompte) {
 		// A titre d'exemple : utilise une m�thode priv�e d�finie en fin de
 		// classe
 		return this.trouveCompte(pNumCompte);
@@ -105,12 +104,12 @@ public class AgenceBancaire {
 	 * 
 	 * @param pNomProprietaire
 	 *            Le nom du propri�taire de Compte dont on veut les Comptes.
-	 * @see AgenceBancaire#addCompte(Compte)
+	 * @see AgenceBancaire#addCompte(CompteGenerique)
 	 * @return Un tableau des Comptes ayant pour propri�taire pNomProprietaire,
 	 *         un tableau de longueur 0 si aucun compte n'est trouv�.
 	 */
 
-	public Compte[] getComptesDe(String pNomProprietaire) {
+	public CompteGenerique[] getComptesDe(String pNomProprietaire) {
 		/*
 		 * M�thode : cr�er une ArrayList de Compte temporaire : alTemp. 
 		 * Parcourir this.alCptes.
@@ -121,14 +120,14 @@ public class AgenceBancaire {
 		 * Sinon cr�er un tableau de 0 �l�ments.
 		 */
 
-		Compte t[], cTemp;
-		ArrayList<Compte> alTemp; // ArrayList de Compte temporaire
+		CompteGenerique t[], cTemp;
+		ArrayList<CompteGenerique> alTemp; // ArrayList de Compte temporaire
 		int nbC, nbCTemp, i;
 
 		t = null;
 
 		// Recherche des comptes de pNomProprietaire dans l'AgenceBancaire
-		alTemp = new ArrayList<Compte>();
+		alTemp = new ArrayList<CompteGenerique>();
 		nbC = this.alCptes.size();
 		for (i = 0; i < nbC; i++) {
 			cTemp = alCptes.get(i);
@@ -141,7 +140,7 @@ public class AgenceBancaire {
 		if (alTemp.size() != 0) {
 			// ... on cr�e un tableau et on les recopie
 			nbCTemp = alTemp.size();
-			t = new Compte[nbCTemp];
+			t = new CompteGenerique[nbCTemp];
 			for (i = 0; i < nbCTemp; i++) {
 				t[i] = alTemp.get(i);
 			}
@@ -152,7 +151,7 @@ public class AgenceBancaire {
 			 */
 		} else {
 			// ... pas de compte dans un tableau vide
-			t = new Compte[0];
+			t = new CompteGenerique[0];
 		}
 		return t;
 	}
@@ -212,7 +211,7 @@ public class AgenceBancaire {
 
 	public void afficher() {
 		int i, nbC;
-		Compte cTemp;
+		CompteGenerique cTemp;
 
 		System.out.println();
 		System.out.println("Nom : " + this.nom + " (" + this.loc + ")");
@@ -244,35 +243,35 @@ public class AgenceBancaire {
 	 * (identique en num�ro de compte � pCompteAAjouter.getNumCompte()).<BR>
 	 * Si on appelle la m�thode avec null en param�tre, la m�thode l�ve une exception.<BR>
 	 * 
-	 * @param compte
+	 * @param pCompteAAjouter
 	 *            Le Compte � ajouter � l'AgenceBancaire.
-	 * @throws ABCompteNullException  lorsque pCompteAAjouter == null	
-	 * @throws ABCompteDejaExistantException  lorsque un compte de num�ro pCompteAAjouter.getNumCompte() existe d�j� dans l'AgenceBancaire.
+	 * @throws ABCompteNullExceptionGenerique  lorsque pCompteAAjouter == null	
+	 * @throws ABCompteDejaExistantExceptionGenerique  lorsque un compte de num�ro pCompteAAjouter.getNumCompte() existe d�j� dans l'AgenceBancaire.
 	 * @see AgenceBancaire#removeCompte(String)
 	 */
 
-	public void addCompte(Compte compte) throws ABCompteNullException, ABCompteDejaExistantException {
-		Compte c;
+	public void addCompte(CompteGenerique pCompteAAjouter) throws ABCompteNullExceptionGenerique, ABCompteDejaExistantExceptionGenerique {
+		CompteGenerique c;
 
 		// Si null => refus�
-		if (compte == null) {
-			throw new ABCompteNullException("Erreur ajout Compte 'null' dans l'agence " 
+		if (pCompteAAjouter == null) {
+			throw new ABCompteNullExceptionGenerique("Erreur ajout Compte 'null' dans l'agence " 
 					+ this.nom + " (" + this.loc + ")");
 		}
 
 		// On cherche un Compte de m�me num�ro
-		c = this.trouveCompte(compte.getNumCompte());
+		c = this.trouveCompte(pCompteAAjouter.getNumCompte());
 
 		// Si trouv�
 		if (c != null) {
 			// => refus�
-			throw new ABCompteDejaExistantException(
+			throw new ABCompteDejaExistantExceptionGenerique(
 					"Erreur ajout Compte d�ja existant ("
-					+ compte.getNumCompte() + ") dans l'agence " 
+					+ pCompteAAjouter.getNumCompte() + ") dans l'agence " 
 					+ this.nom + " (" + this.loc + ")");
 		} else {
 			// ... on ajoute le Compte
-			this.alCptes.add(compte);
+			this.alCptes.add(pCompteAAjouter);
 
 		}
 	}
@@ -285,11 +284,11 @@ public class AgenceBancaire {
 	 * 
 	 * @param pNumCompte
 	 *            Le num�ro du Compte � supprimer de l'AgenceBancaire.
-	 * @throws ABCompteInexistantException	Lorsque aucun compte de num�ro pNumCompte ne peut �tre trouv�.
-	 * @see AgenceBancaire#addCompte(Compte)
+	 * @throws ABCompteInexistantExceptionGenerique	Lorsque aucun compte de num�ro pNumCompte ne peut �tre trouv�.
+	 * @see AgenceBancaire#addCompte(CompteGenerique)
 	 */
 	public void removeCompte(String pNumCompte) throws ABCompteInexistantExceptionGenerique{
-		Compte c;
+		CompteGenerique c;
 
 		// On cherche un Compte de m�me num�ro
 		c = this.trouveCompte(pNumCompte);
@@ -316,8 +315,8 @@ public class AgenceBancaire {
 	 * @param      pNC  num�ro dui compte recherch�
 	 * @return     l'objet compte (la r�f�rence de) trouv� ou null si non trouv�. 
 	 */
-	private Compte trouveCompte(String pNC) {
-		Compte c, cTemp;
+	private CompteGenerique trouveCompte(String pNC) {
+		CompteGenerique c, cTemp;
 		int i, nbC;
 
 		// On parcours l'ArrayList de l'AgenceBancaire

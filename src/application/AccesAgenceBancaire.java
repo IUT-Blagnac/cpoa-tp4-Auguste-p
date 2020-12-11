@@ -11,7 +11,6 @@ public class AccesAgenceBancaire {
 	private AccesAgenceBancaire () {}
 	
 	public static AgenceBancaire getAgenceBancaire () {
-		
 		// To be done : load it from file
 		// Not yet implemented, just a stub
 		
