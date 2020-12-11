@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import banque.exception.ABCompteDejaExistantException;
 import banque.exception.ABCompteInexistantException;
-import banque.exception.ABCompteInexistantExceptionGenerique;
 import banque.exception.ABCompteNullException;
 
 
@@ -288,7 +287,7 @@ public class AgenceBancaire {
 	 * @throws ABCompteInexistantException	Lorsque aucun compte de num�ro pNumCompte ne peut �tre trouv�.
 	 * @see AgenceBancaire#addCompte(Compte)
 	 */
-	public void removeCompte(String pNumCompte) throws ABCompteInexistantExceptionGenerique{
+	public void removeCompte(String pNumCompte) throws ABCompteInexistantException{
 		Compte c;
 
 		// On cherche un Compte de m�me num�ro
@@ -297,7 +296,7 @@ public class AgenceBancaire {
 		// Si pas trouv� ...
 		if (c == null) {
 			// ... erreur
-			throw new ABCompteInexistantExceptionGenerique(
+			throw new ABCompteInexistantException (
 					"Erreur suppression Compte inexistant ("
 					+ pNumCompte+ ") dans l'agence " 
 					+ this.nom + " (" + this.loc + ")");

@@ -2,10 +2,10 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-import application.AccesAgenceBancaireGenerique;
-import banque.AgenceBancaireGenerique;
-import banque.CompteGenerique;
-import banque.exception.CompteExceptionGenerique;
+import application.AccesAgenceBancaire;
+import banque.AgenceBancaire;
+import banque.Compte;
+import banque.exception.CompteException;
 
 public class OLD_ApplicationAgenceBancaire {
 	
@@ -13,7 +13,7 @@ public class OLD_ApplicationAgenceBancaire {
 	 * Affichage du menu de l'application
 	 * @param ag	AgenceBancaire pour r�cup�rer le nom et la localisation
 	 */
-	public static void afficherMenu(AgenceBancaireGenerique ag) {
+	public static void afficherMenu(AgenceBancaire ag) {
 		System.out.println("Menu de " + ag.getNomAgence() + " (" + ag.getLocAgence() + ")");
 		System.out.println("l - Liste des comptes de l'agence");
 		System.out.println("v - Voir un compte (par son numéro)");
@@ -44,31 +44,31 @@ public class OLD_ApplicationAgenceBancaire {
 
 		boolean continuer ;
 		Scanner lect;
-		AgenceBancaireGenerique monAg ;
+		AgenceBancaire monAg ;
 		
 		String nom, numero;		
-		CompteGenerique c;
+		Compte c;
 		double montant;
 		
 		lect = new Scanner ( System.in );
 		lect.useLocale(Locale.US);
 		
-		monAg = AccesAgenceBancaireGenerique.getAgenceBancaire();
+		monAg = AccesAgenceBancaire.getAgenceBancaire();
 		
 		continuer = true;
 		while (continuer) {
-			OLD_ApplicationAgenceBancaireGenerique.afficherMenu(monAg);
+			OLD_ApplicationAgenceBancaire.afficherMenu(monAg);
 			choix = lect.next();
 			choix = choix.toLowerCase();
 			switch (choix) {
 				case "q" :
 					System.out.println("ByeBye");
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.tempo();
 					continuer = false;
 					break;
 				case "l" :
 					monAg.afficher();
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.tempo();
 					break;	
 				case "v" :
 					System.out.print("Num compte -> ");
@@ -79,41 +79,41 @@ public class OLD_ApplicationAgenceBancaire {
 					} else {
 						c.afficher();
 					}
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.tempo();
 					break;
 				case "p" :
 					System.out.print("Propriétaire -> ");
 					nom = lect.next();
-					OLD_ApplicationAgenceBancaireGenerique.comptesDUnPropretaire (monAg, nom);
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.comptesDUnPropretaire (monAg, nom);
+					OLD_ApplicationAgenceBancaire.tempo();
 					break;		
 				case "d" :
 					System.out.print("Num compte -> ");
 					numero = lect.next();
 					System.out.print("Montant à déposer -> ");
 					montant = lect.nextDouble();
-					OLD_ApplicationAgenceBancaireGenerique.deposerSurUnCompte(monAg, numero, montant);
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.deposerSurUnCompte(monAg, numero, montant);
+					OLD_ApplicationAgenceBancaire.tempo();
 					break;
 				case "r" :
 					System.out.print("Num compte -> ");
 					numero = lect.next();
 					System.out.print("Montant à retirer -> ");
 					montant = lect.nextDouble();
-					OLD_ApplicationAgenceBancaireGenerique.retirerSurUnCompte(monAg, numero, montant);
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.retirerSurUnCompte(monAg, numero, montant);
+					OLD_ApplicationAgenceBancaire.tempo();
 					break;
 				default :
 					System.out.println("Erreur de saisie ...");
-					OLD_ApplicationAgenceBancaireGenerique.tempo();
+					OLD_ApplicationAgenceBancaire.tempo();
 					break;
 			}
 		}
 		
 	}
 	
-	public static void comptesDUnPropretaire (AgenceBancaireGenerique ag, String nomProprietaire) {
-		CompteGenerique []  t; 
+	public static void comptesDUnPropretaire (AgenceBancaire ag, String nomProprietaire) {
+		Compte []  t; 
 		
 		t = ag.getComptesDe(nomProprietaire);
 		if (t.length == 0) {
@@ -125,8 +125,8 @@ public class OLD_ApplicationAgenceBancaire {
 		}
 	}
 
-	public static void deposerSurUnCompte (AgenceBancaireGenerique ag, String numeroCompte, double montant) {
-		CompteGenerique c;
+	public static void deposerSurUnCompte (AgenceBancaire ag, String numeroCompte, double montant) {
+		Compte c;
 		
 		c = ag.getCompte(numeroCompte);
 		if (c==null) {
@@ -136,15 +136,15 @@ public class OLD_ApplicationAgenceBancaire {
 			try {
 				c.deposer(montant);
 				System.out.println("Montant d�pos�, solde : "+c.soldeCompte());
-			} catch (CompteExceptionGenerique e) {
+			} catch (CompteException e) {
 				System.out.println("Erreur de d�pot, solde inchang� : " + c.soldeCompte());
 				System.out.println(e.getMessage());
 			}
 		}
 	}
 	
-	public static void retirerSurUnCompte (AgenceBancaireGenerique ag, String numeroCompte, double montant) {
-		CompteGenerique c;
+	public static void retirerSurUnCompte (AgenceBancaire ag, String numeroCompte, double montant) {
+		Compte c;
 		
 		c = ag.getCompte(numeroCompte);
 		if (c==null) {
@@ -154,7 +154,7 @@ public class OLD_ApplicationAgenceBancaire {
 			try {
 				c.retirer(montant);
 				System.out.println("Montant retir�, solde : "+c.soldeCompte());
-			} catch (CompteExceptionGenerique e) {
+			} catch (CompteException e) {
 				System.out.println("Erreur de d�pot, solde inchang� : " + c.soldeCompte());
 				System.out.println(e.getMessage());
 			}
