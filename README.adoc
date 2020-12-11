@@ -491,7 +491,7 @@ Ca marche ?
 ====
 +
 .	Vous pouvez créer les autres actions et sous-menus.
-.	Pourquoi ActionList hérite de Action à votre avis ?
+.	Pourquoi ActionList hérite de Action à votre avis ? Grâce à cet héritage on peut mettre en place les sous-menus (ActionList dans ActionList)
 +
 [WARNING]
 ====
@@ -526,7 +526,7 @@ Questions :
 
 .	Considérant les nouvelles classes `Eleve` et `GroupeEleve`, peut-on réutiliser telles quelles (sans les modifier) les interfaces `Action` et `ActionList` dans la nouvelle application ?
 .	Si oui : pourquoi ?
-.	Si non : pourquoi ?
+.	Si non : pourquoi ? Non, car elles prennent en paramètre une AgenceBancaire
 
 ifdef::prof[]
 [icon="{iconsdir}/solution.png"]
